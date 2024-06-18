@@ -15,6 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <h2 className="text-2xl">app/layout.tsx</h2>
         <Providers>{children}</Providers>
       </body>
     </html>
