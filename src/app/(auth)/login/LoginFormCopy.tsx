@@ -1,60 +1,70 @@
 "use client";
 
 import { Button, Card, CardBody, CardHeader, Input } from "@nextui-org/react";
-import { GiPadlock } from "react-icons/gi";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { LoginSchema, loginSchema } from "@/lib/schemas/loginSchmea";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { GiPadlock } from "react-icons/gi";
 
-export default function LoginForm() {
+export default function LoginFormCopy() {
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm<LoginSchema>({
-    resolver: zodResolver(loginSchema),
-  });
+  } = useForm();
 
-  const onsubmit = (data: LoginSchema) => {
+  const onSubmit = (data: any) => {
     console.log(data);
+    console.log(errors.email);
   };
+
+  const [count, setCount] = useState(0);
+  const refCount = useRef(0);
+
+  useEffect(() => {
+    // setCount((c) => c + 1);
+    refCount.current = refCount.current + 1;
+  });
 
   return (
     <Card className="w-2/5 mx-auto">
       <CardHeader className="flex flex-col items-center justify-center">
-        <div className="flex flex-col gap-2 items-center justify-center">
-          <div className="flex flex-row gap-3 items-center">
+        <div className="flex flex-col gap-2 items-center text-secondary">
+          <div className="flex flex-row items-center gap-3">
             <GiPadlock size={30} />
             <h1 className="text-3xl font-semibold">Login</h1>
           </div>
           <p className="text-neutral-500">Welcome back to LinkUp</p>
+          <h2 className="text-xl2">{refCount.current}</h2>
         </div>
       </CardHeader>
       <CardBody>
-        <form onSubmit={handleSubmit(onsubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="space-y-4">
             <Input
               defaultValue=""
               label="Email"
               variant="bordered"
-              {...register("email")}
-              isInvalid={!!errors.email}
+              {...register("email", { required: "Email Address is required" })}
+              isInvalid={errors.email ? true : false}
               errorMessage={errors.email?.message as string}
             />
             <Input
               defaultValue=""
               label="Password"
-              type="password"
               variant="bordered"
-              {...register("password")}
-              isInvalid={!!errors.password}
+              type="password"
+              {...register("password", {
+                required: "Password is required",
+              })}
+              isInvalid={errors.password ? true : false}
               errorMessage={errors.password?.message as string}
             />
+
             <Button
+              isDisabled={!isValid}
               fullWidth
               color="secondary"
               type="submit"
-              isDisabled={!isValid}
             >
               Login
             </Button>
