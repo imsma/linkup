@@ -13,6 +13,7 @@ export default function LoginForm() {
     formState: { errors, isValid },
   } = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
+    mode: "onTouched",
   });
 
   const onsubmit = (data: LoginSchema) => {
