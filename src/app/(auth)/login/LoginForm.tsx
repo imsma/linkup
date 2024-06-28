@@ -21,7 +21,7 @@ export default function LoginForm() {
   };
 
   return (
-    <Card className="w-2/5 mx-auto">
+    <Card className="w-2/5 h-2/5  mx-auto">
       <CardHeader className="flex flex-col items-center justify-center">
         <div className="flex flex-col gap-2 items-center justify-center">
           <div className="flex flex-row gap-3 items-center">
@@ -31,7 +31,7 @@ export default function LoginForm() {
           <p className="text-neutral-500">Welcome back to LinkUp</p>
         </div>
       </CardHeader>
-      <CardBody>
+      <CardBody className="flex justify-center">
         <form onSubmit={handleSubmit(onsubmit)}>
           <div className="space-y-4">
             <Input
