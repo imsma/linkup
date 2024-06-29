@@ -5,6 +5,7 @@ import { GiPadlock } from "react-icons/gi";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RegisterSchema, registerSchema } from "@/lib/schemas/registerSchema";
+import { registerUser } from "@/app/actions/authActions";
 
 export default function RegisterForm() {
   const {
@@ -12,11 +13,14 @@ export default function RegisterForm() {
     handleSubmit,
     formState: { errors, isValid },
   } = useForm<RegisterSchema>({
-    resolver: zodResolver(registerSchema),
+    // resolver: zodResolver(registerSchema),
     mode: "onTouched",
   });
 
-  const onSubmit = (data: RegisterSchema) => {};
+  const onSubmit = async (data: RegisterSchema) => {
+    const result = await registerUser(data);
+    console.log({ result });
+  };
 
   return (
     <Card className="w-2/5 mx-auto">
