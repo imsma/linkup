@@ -14,12 +14,12 @@ export default {
 
         if (validated.success) {
           const { email, password } = validated.data;
-          const user = await getUserByEmail(email);
 
-          if (user && (await compare(password, user.passwordHash))) {
-            return null;
-          }
-          return user;
+          console.log("}}} validated.success", email, password);
+          const user = await getUserByEmail(email);
+          if (!user) return null;
+          const passwordMatch = await compare(password, user.passwordHash);
+          if (passwordMatch) return user;
         }
         return null;
       },
