@@ -1,3 +1,5 @@
+"use client";
+
 import { calculateAge } from "@/lib/util";
 import {
   Button,
