@@ -1,10 +1,11 @@
 "use server";
 
-import { signIn, signOut } from "@/auth";
+import { auth, signIn, signOut } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { LoginSchema } from "@/lib/schemas/loginSchmea";
 import { RegisterSchema, registerSchema } from "@/lib/schemas/registerSchema";
 import { ActionResult } from "@/types";
+import { user } from "@nextui-org/react";
 import { User } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { AuthError } from "next-auth";
@@ -81,4 +82,13 @@ export async function signInUser(
 
 export async function signoutUser() {
   await signOut({ redirectTo: "/" });
+}
+
+export async function getAuthUserId() {
+  const session = await auth();
+  const userId = session?.user?.id;
+
+  if (!userId) throw new Error("Authorized");
+
+  return userId;
 }
